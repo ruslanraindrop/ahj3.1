@@ -17,7 +17,7 @@ export default function counter() {
     changeImg();
   };
 
-  if (count > 6) {
+  if (count > 5) {
     alert('Вы проиграли!');
     count = 0;
   }
