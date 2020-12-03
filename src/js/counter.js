@@ -17,12 +17,12 @@ export default function counter() {
     changeImg();
   };
 
-  if (click === false) {
-    count += 1;
-  }
-
   if (count > 5) {
     alert('Вы проиграли!');
     count = 0;
+  }
+
+  if (click === false) {
+    count += 1;
   }
 }
