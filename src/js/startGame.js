@@ -1,9 +1,10 @@
-import changeImg from './changeImg';
-import counter from './counter';
+import changeImg, { img } from './changeImg';
+import Counter from './counter';
 
 export default function startGame() {
-  setInterval(() => {
-    changeImg();
-    counter();
-  }, 1000);
+  const counter = new Counter(1000);
+  img.addEventListener('click', () => counter.onClick());
+  counter.onNext(changeImg);
+  counter.reset();
+  counter.start();
 }

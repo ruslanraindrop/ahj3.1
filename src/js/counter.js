@@ -1,28 +1,52 @@
-import changeImg, { img } from './changeImg';
+import changeImg from './changeImg';
 
-let count = 0;
-let click = false;
-
-export default function counter() {
-  const score = document.getElementById('1');
-  score.textContent = `Вы пропустили ${count} гоблинов`;
-  img.onclick = function clicker() {
-    click = true;
-    if (count > 0) {
-      count -= 1;
-    } else {
-      count = 0;
-    }
-    click = false;
-    changeImg();
-  };
-
-  if (count > 5) {
-    alert('Вы проиграли!');
-    count = 0;
+export default class Counter {
+  constructor(frequency) {
+    this.frequency = frequency;
+    this.score = document.getElementById('1');
   }
 
-  if (click === false) {
-    count += 1;
+  reset() {
+    this.count = 0;
+    this.click = false;
+    this.score.textContent = `Вы пропустили ${this.count} гоблинов`;
+  }
+
+  start() {
+    this.intervalID = setInterval(() => {
+      this.click = false;
+      this.check();
+      this.next();
+    }, this.frequency);
+  }
+
+  check() {
+    this.score.textContent = `Вы пропустили ${this.count} гоблинов`;
+
+    if (this.count > 5) {
+      alert('Вы проиграли!');
+      clearInterval(this.intervalID);
+      this.reset();
+      this.start();
+    }
+
+    if (this.click === false) {
+      this.count += 1;
+    }
+  }
+
+  onClick() {
+    this.click = true;
+    if (this.count > 0) {
+      this.count -= 1;
+    } else {
+      this.count = 0;
+    }
+    this.click = false;
+    changeImg();
+  }
+
+  onNext(handler) {
+    this.next = handler;
   }
 }
